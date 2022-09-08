@@ -40,5 +40,29 @@ namespace Lesson4Framework.Properties {
                 return ((string)(this["ApplicationNameDebug"]));
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string FIO {
+            get {
+                return ((string)(this["FIO"]));
+            }
+            set {
+                this["FIO"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int Age {
+            get {
+                return ((int)(this["Age"]));
+            }
+            set {
+                this["Age"] = value;
+            }
+        }
     }
 }
