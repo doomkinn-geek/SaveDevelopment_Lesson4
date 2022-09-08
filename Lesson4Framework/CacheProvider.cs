@@ -15,10 +15,35 @@ namespace Lesson4Framework
         static byte[] entropy = { 4, 2, 7, 3, 7 };
         public void CacheConnections(List<ConnectionString> connections)
         {
-            XmlSerializer xml = new XmlSerializer(typeof(List<ConnectionString>));
-            MemoryStream stream = new MemoryStream();
-            XmlWriter writer = new XmlTextWriter(stream, Encoding.UTF8);
-            xml.Serialize(writer, connections);
+            try
+            { 
+                XmlSerializer xml = new XmlSerializer(typeof(List<ConnectionString>));
+                MemoryStream stream = new MemoryStream();
+                XmlWriter writer = new XmlTextWriter(stream, Encoding.UTF8);
+                xml.Serialize(writer, connections);
+                byte[] data = Protect(stream.ToArray());
+                File.WriteAllBytes($"{AppDomain.CurrentDomain.BaseDirectory}data.protected", data);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Serialize data error.");
+            }
+        }
+
+        public List<ConnectionString> GetConnectionsFromCache()
+        {
+            try
+            {
+                XmlSerializer xml = new XmlSerializer(typeof(List<ConnectionString>));
+                byte[] protectedData = File.ReadAllBytes($"{AppDomain.CurrentDomain.BaseDirectory}data.protected");
+                byte[] data = Unprotect(protectedData);
+                return (List<ConnectionString>)xml.Deserialize(new MemoryStream(data));
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Deserialize data error.");
+                return null;
+            }
         }
 
         public byte[] Protect(byte[] data)

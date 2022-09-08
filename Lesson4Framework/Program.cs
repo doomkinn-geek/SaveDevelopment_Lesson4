@@ -37,6 +37,36 @@ namespace Lesson4Framework
 
             //c:\Users\root\AppData\Local\Lesson4Framework\Lesson4Framework.exe_Url_zxpjkmcefsvbompgprvb00r2l4xddtpv\1.0.0.0\
 
+            ConnectionString connectionString1 = new ConnectionString
+            {
+                DatabaseName = "Database1",
+                Host = "localhost",
+                Password = "12345",
+                UserName = "User1"
+            };
+
+            ConnectionString connectionString2 = new ConnectionString
+            {
+                DatabaseName = "Database2",
+                Host = "localhost",
+                Password = "54321",
+                UserName = "User2"
+            };
+
+            List<ConnectionString> connections = new List<ConnectionString>();
+            connections.Add(connectionString1);
+            connections.Add(connectionString2);
+            CacheProvider cacheProvider = new CacheProvider();
+            cacheProvider.CacheConnections(connections);
+
+            CacheProvider cacheProvider2 = new CacheProvider();
+            List<ConnectionString> connections2 = cacheProvider2.GetConnectionsFromCache();
+
+            foreach (var connection in connections2)
+            {
+                Console.WriteLine($"{connection.Host} {connection.DatabaseName} {connection.UserName} {connection.Password}");
+            }
+
             Console.ReadKey();
         }
     }
